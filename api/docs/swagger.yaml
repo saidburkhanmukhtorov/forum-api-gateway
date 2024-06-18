@@ -1,0 +1,1031 @@
+basePath: /v1
+definitions:
+  category.Category:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      id:
+        description: UUID
+        type: string
+      name:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  category.CreateCategoryRequest:
+    properties:
+      name:
+        type: string
+    type: object
+  category.DeleteCategoryResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  category.GetAllCategoriesResponse:
+    properties:
+      categories:
+        items:
+          $ref: '#/definitions/category.Category'
+        type: array
+    type: object
+  category.UpdateCategoryRequest:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  comment.Comment:
+    properties:
+      body:
+        type: string
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      id:
+        description: UUID
+        type: string
+      post_id:
+        description: UUID
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        description: UUID
+        type: string
+    type: object
+  comment.CreateCommentRequest:
+    properties:
+      body:
+        type: string
+      post_id:
+        type: string
+      user_id:
+        type: string
+    type: object
+  comment.DeleteCommentResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  comment.GetAllCommentsResponse:
+    properties:
+      comments:
+        items:
+          $ref: '#/definitions/comment.Comment'
+        type: array
+    type: object
+  comment.UpdateCommentRequest:
+    properties:
+      body:
+        type: string
+      id:
+        type: string
+    type: object
+  post.CreatePostRequest:
+    properties:
+      body:
+        type: string
+      category_id:
+        type: string
+      title:
+        type: string
+      user_id:
+        type: string
+    type: object
+  post.DeletePostResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  post.GetAllPostsResponse:
+    properties:
+      posts:
+        items:
+          $ref: '#/definitions/post.Post'
+        type: array
+    type: object
+  post.Post:
+    properties:
+      body:
+        type: string
+      category_id:
+        description: UUID
+        type: string
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      id:
+        description: UUID
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        description: UUID
+        type: string
+    type: object
+  post.UpdatePostRequest:
+    properties:
+      body:
+        type: string
+      category_id:
+        type: string
+      id:
+        type: string
+      title:
+        type: string
+    type: object
+  posttag.CreatePostTagRequest:
+    properties:
+      post_id:
+        type: string
+      tag_id:
+        type: string
+    type: object
+  posttag.DeletePostTagRequest:
+    properties:
+      post_id:
+        type: string
+      tag_id:
+        type: string
+    type: object
+  posttag.DeletePostTagResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  posttag.GetAllPostTagsResponse:
+    properties:
+      post_tags:
+        items:
+          $ref: '#/definitions/posttag.PostTag'
+        type: array
+    type: object
+  posttag.GetPostsByTagResponse:
+    properties:
+      posts:
+        description: Array of post
+        items:
+          $ref: '#/definitions/post.Post'
+        type: array
+    type: object
+  posttag.PostTag:
+    properties:
+      created_at:
+        type: string
+      post_id:
+        description: UUID
+        type: string
+      tag_id:
+        description: UUID
+        type: string
+    type: object
+  tag.CreateTagRequest:
+    properties:
+      name:
+        type: string
+    type: object
+  tag.DeleteTagResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  tag.GetAllTagsResponse:
+    properties:
+      tags:
+        items:
+          $ref: '#/definitions/tag.Tag'
+        type: array
+    type: object
+  tag.Tag:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      id:
+        description: UUID
+        type: string
+      name:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  tag.UpdateTagRequest:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: This is a forum API gateway service.
+  title: Forum API Gateway
+  version: "1.0"
+paths:
+  /categories:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list of all categories with optional pagination
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Number of categories per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/category.GetAllCategoriesResponse'
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Get all categories
+      tags:
+      - category
+    post:
+      consumes:
+      - application/json
+      description: Create a new category with given information
+      parameters:
+      - description: Category information
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/category.CreateCategoryRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/category.Category'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Create a new category
+      tags:
+      - category
+  /categories/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a category by its unique ID
+      parameters:
+      - description: Category ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/category.DeleteCategoryResponse'
+        "404":
+          description: Category item not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Delete a category by its ID
+      tags:
+      - category
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a category by its unique ID
+      parameters:
+      - description: Category ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/category.Category'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "404":
+          description: Category item not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Get a category by its ID
+      tags:
+      - category
+    put:
+      consumes:
+      - application/json
+      description: Update a category with the given information
+      parameters:
+      - description: Category ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Category information
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/category.UpdateCategoryRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/category.Category'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "404":
+          description: Category item not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Update a category by its ID
+      tags:
+      - category
+  /comments:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list of all comments with optional filtering and pagination
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Number of comments per page
+        in: query
+        name: limit
+        type: integer
+      - description: Filter by post ID
+        in: query
+        name: post_id
+        type: string
+      - description: Filter by user ID
+        in: query
+        name: user_id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/comment.GetAllCommentsResponse'
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Get all comments
+      tags:
+      - comment
+    post:
+      consumes:
+      - application/json
+      description: Create a new comment with given information
+      parameters:
+      - description: Comment information
+        in: body
+        name: comment
+        required: true
+        schema:
+          $ref: '#/definitions/comment.CreateCommentRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/comment.Comment'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Create a new comment
+      tags:
+      - comment
+  /comments/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a comment by its unique ID
+      parameters:
+      - description: Comment ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/comment.DeleteCommentResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "404":
+          description: Comment item not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Delete a comment by its ID
+      tags:
+      - comment
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a comment by its unique ID
+      parameters:
+      - description: Comment ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/comment.Comment'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "404":
+          description: Comment item not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Get a comment by its ID
+      tags:
+      - comment
+    put:
+      consumes:
+      - application/json
+      description: Update a comment with the given information
+      parameters:
+      - description: Comment ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Comment information
+        in: body
+        name: comment
+        required: true
+        schema:
+          $ref: '#/definitions/comment.UpdateCommentRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/comment.Comment'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "404":
+          description: Comment item not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Update a comment by its ID
+      tags:
+      - comment
+  /posts:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list of all posts with optional filtering and pagination
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Number of posts per page
+        in: query
+        name: limit
+        type: integer
+      - description: Filter by user ID
+        in: query
+        name: user_id
+        type: string
+      - description: Filter by title
+        in: query
+        name: title
+        type: string
+      - description: Filter by category ID
+        in: query
+        name: category_id
+        type: string
+      - description: Filter by body content (partial match)
+        in: query
+        name: body
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/post.GetAllPostsResponse'
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Get all posts
+      tags:
+      - post
+    post:
+      consumes:
+      - application/json
+      description: Create a new post with given information
+      parameters:
+      - description: Post information
+        in: body
+        name: post
+        required: true
+        schema:
+          $ref: '#/definitions/post.CreatePostRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/post.Post'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Create a new post
+      tags:
+      - post
+  /posts/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a post by its unique ID
+      parameters:
+      - description: Post ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/post.DeletePostResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "404":
+          description: Post item not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Delete a post by its ID
+      tags:
+      - post
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a post by its unique ID
+      parameters:
+      - description: Post ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/post.Post'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "404":
+          description: Post item not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Get a post by its ID
+      tags:
+      - post
+    put:
+      consumes:
+      - application/json
+      description: Update a post with the given information
+      parameters:
+      - description: Post ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Post information
+        in: body
+        name: post
+        required: true
+        schema:
+          $ref: '#/definitions/post.UpdatePostRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/post.Post'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "404":
+          description: Post item not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Update a post by its ID
+      tags:
+      - post
+  /posttags:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a post-tag relationship with given information
+      parameters:
+      - description: PostTag information
+        in: body
+        name: posttag
+        required: true
+        schema:
+          $ref: '#/definitions/posttag.DeletePostTagRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/posttag.DeletePostTagResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "404":
+          description: Post_tag item not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Delete a post-tag relationship
+      tags:
+      - posttag
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list of all post-tag relationships with optional filtering
+        and pagination
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Number of post-tag relationships per page
+        in: query
+        name: limit
+        type: integer
+      - description: Filter by post ID
+        in: query
+        name: post_id
+        type: string
+      - description: Filter by tag ID
+        in: query
+        name: tag_id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/posttag.GetAllPostTagsResponse'
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Get all post-tag relationships
+      tags:
+      - posttag
+    post:
+      consumes:
+      - application/json
+      description: Create a new post-tag relationship with given information
+      parameters:
+      - description: PostTag information
+        in: body
+        name: posttag
+        required: true
+        schema:
+          $ref: '#/definitions/posttag.CreatePostTagRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/posttag.PostTag'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Create a new post-tag relationship
+      tags:
+      - posttag
+  /posttags/{tag_id}/posts:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list of posts associated with a given tag ID
+      parameters:
+      - description: Tag ID
+        in: path
+        name: tag_id
+        required: true
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Number of posts per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/posttag.GetPostsByTagResponse'
+        "404":
+          description: Posttag item not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Get posts by tag ID
+      tags:
+      - posttag
+  /tags:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list of all tags with optional pagination
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Number of tags per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tag.GetAllTagsResponse'
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Get all tags
+      tags:
+      - tag
+    post:
+      consumes:
+      - application/json
+      description: Create a new tag with given information
+      parameters:
+      - description: Tag information
+        in: body
+        name: tag
+        required: true
+        schema:
+          $ref: '#/definitions/tag.CreateTagRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/tag.Tag'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Create a new tag
+      tags:
+      - tag
+  /tags/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a tag by its unique ID
+      parameters:
+      - description: Tag ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tag.DeleteTagResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "404":
+          description: Tag item not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Delete a tag by its ID
+      tags:
+      - tag
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a tag by its unique ID
+      parameters:
+      - description: Tag ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tag.Tag'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "404":
+          description: Tag item not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Get a tag by its ID
+      tags:
+      - tag
+    put:
+      consumes:
+      - application/json
+      description: Update a tag with the given information
+      parameters:
+      - description: Tag ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Tag information
+        in: body
+        name: tag
+        required: true
+        schema:
+          $ref: '#/definitions/tag.UpdateTagRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tag.Tag'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "404":
+          description: Tag item not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Update a tag by its ID
+      tags:
+      - tag
+swagger: "2.0"
