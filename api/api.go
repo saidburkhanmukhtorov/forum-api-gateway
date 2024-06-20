@@ -3,6 +3,7 @@ package api
 import (
 	_ "github.com/Forum-service/Forum-api-gateway/api/docs"
 	"github.com/Forum-service/Forum-api-gateway/api/handler"
+	"github.com/Forum-service/Forum-api-gateway/api/middlewares"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
@@ -14,6 +15,9 @@ import (
 // @description This is a forum API gateway service.
 // @host localhost:8080
 // @BasePath /v1
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
 func NewEngine() *gin.Engine {
 	h, err := handler.NewHandler()
 	if err != nil {
@@ -22,7 +26,7 @@ func NewEngine() *gin.Engine {
 
 	r := gin.Default()
 	r.GET("/api/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
+	r.Use(middlewares.Auth)
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"*"}, // Adjust for your specific origins
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
@@ -66,6 +70,7 @@ func NewEngine() *gin.Engine {
 		v1.DELETE("/posttags/:postid/:tagid", h.DeletePostTag)
 		v1.GET("/posttags", h.GetAllPostTags)
 		v1.GET("/posttags/:tag_id/posts", h.GetPostsByTag)
+		v1.GET("/tags/popular", h.GetFamousTags)
 	}
 
 	return r

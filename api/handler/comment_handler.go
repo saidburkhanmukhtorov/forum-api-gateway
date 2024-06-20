@@ -15,6 +15,7 @@ import (
 // @Tags comment
 // @Accept json
 // @Produce json
+// @Security BearerAuth
 // @Param comment body comment.CreateCommentRequest true "Comment information"
 // @Success 201 {object} comment.Comment
 // @Failure 400 {object} string "Invalid request body"
@@ -46,6 +47,7 @@ func (h *Handler) CreateComment(c *gin.Context) {
 // @Tags comment
 // @Accept json
 // @Produce json
+// @Security BearerAuth
 // @Param id path string true "Comment ID"
 // @Success 200 {object} comment.Comment
 // @Failure 400 {object} string "Invalid request body"
@@ -74,6 +76,7 @@ func (h *Handler) GetCommentById(c *gin.Context) {
 // @Tags comment
 // @Accept json
 // @Produce json
+// @Security BearerAuth
 // @Param id path string true "Comment ID"
 // @Param comment body comment.UpdateCommentRequest true "Comment information"
 // @Success 200 {object} comment.Comment
@@ -109,6 +112,7 @@ func (h *Handler) UpdateComment(c *gin.Context) {
 // @Tags comment
 // @Accept json
 // @Produce json
+// @Security BearerAuth
 // @Param id path string true "Comment ID"
 // @Success 200 {object} comment.DeleteCommentResponse
 // @Failure 400 {object} string "Invalid request body"
@@ -134,6 +138,7 @@ func (h *Handler) DeleteComment(c *gin.Context) {
 // @Tags comment
 // @Accept json
 // @Produce json
+// @Security BearerAuth
 // @Param page query int false "Page number"
 // @Param limit query int false "Number of comments per page"
 // @Param post_id query string false "Filter by post ID"

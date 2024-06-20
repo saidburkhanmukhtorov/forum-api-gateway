@@ -197,11 +197,25 @@ definitions:
       message:
         type: string
     type: object
+  tag.FamousTag:
+    properties:
+      count:
+        type: integer
+      name:
+        type: string
+    type: object
   tag.GetAllTagsResponse:
     properties:
       tags:
         items:
           $ref: '#/definitions/tag.Tag'
+        type: array
+    type: object
+  tag.GetFamousTagsRes:
+    properties:
+      tags:
+        items:
+          $ref: '#/definitions/tag.FamousTag'
         type: array
     type: object
   tag.Tag:
@@ -257,6 +271,8 @@ paths:
           description: Internal server error
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Get all categories
       tags:
       - category
@@ -286,68 +302,9 @@ paths:
           description: Internal server error
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Create a new category
-      tags:
-      - category
-  /categories/{id}:
-    delete:
-      consumes:
-      - application/json
-      description: Delete a category by its unique ID
-      parameters:
-      - description: Category ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/category.DeleteCategoryResponse'
-        "404":
-          description: Category item not found
-          schema:
-            type: string
-        "500":
-          description: Internal server error
-          schema:
-            type: string
-      summary: Delete a category by its ID
-      tags:
-      - category
-    get:
-      consumes:
-      - application/json
-      description: Retrieve a category by its unique ID
-      parameters:
-      - description: Category ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/category.Category'
-        "400":
-          description: Invalid request body
-          schema:
-            type: string
-        "404":
-          description: Category item not found
-          schema:
-            type: string
-        "500":
-          description: Internal server error
-          schema:
-            type: string
-      summary: Get a category by its ID
       tags:
       - category
     put:
@@ -385,7 +342,74 @@ paths:
           description: Internal server error
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Update a category by its ID
+      tags:
+      - category
+  /categories/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a category by its unique ID
+      parameters:
+      - description: Category ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/category.DeleteCategoryResponse'
+        "404":
+          description: Category item not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Delete a category by its ID
+      tags:
+      - category
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a category by its unique ID
+      parameters:
+      - description: Category ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/category.Category'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "404":
+          description: Category item not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get a category by its ID
       tags:
       - category
   /comments:
@@ -421,6 +445,8 @@ paths:
           description: Internal server error
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Get all comments
       tags:
       - comment
@@ -450,6 +476,8 @@ paths:
           description: Internal server error
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Create a new comment
       tags:
       - comment
@@ -483,6 +511,8 @@ paths:
           description: Internal server error
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Delete a comment by its ID
       tags:
       - comment
@@ -515,6 +545,8 @@ paths:
           description: Internal server error
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Get a comment by its ID
       tags:
       - comment
@@ -553,6 +585,8 @@ paths:
           description: Internal server error
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Update a comment by its ID
       tags:
       - comment
@@ -597,6 +631,8 @@ paths:
           description: Internal server error
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Get all posts
       tags:
       - post
@@ -626,6 +662,8 @@ paths:
           description: Internal server error
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Create a new post
       tags:
       - post
@@ -659,6 +697,8 @@ paths:
           description: Internal server error
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Delete a post by its ID
       tags:
       - post
@@ -691,6 +731,8 @@ paths:
           description: Internal server error
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Get a post by its ID
       tags:
       - post
@@ -729,6 +771,8 @@ paths:
           description: Internal server error
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Update a post by its ID
       tags:
       - post
@@ -763,6 +807,8 @@ paths:
           description: Internal server error
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Delete a post-tag relationship
       tags:
       - posttag
@@ -799,6 +845,8 @@ paths:
           description: Internal server error
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Get all post-tag relationships
       tags:
       - posttag
@@ -828,6 +876,8 @@ paths:
           description: Internal server error
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Create a new post-tag relationship
       tags:
       - posttag
@@ -865,6 +915,8 @@ paths:
           description: Internal server error
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Get posts by tag ID
       tags:
       - posttag
@@ -874,6 +926,10 @@ paths:
       - application/json
       description: Retrieve a list of all tags with optional pagination
       parameters:
+      - description: Find by tags name
+        in: query
+        name: name
+        type: string
       - description: Page number
         in: query
         name: page
@@ -893,6 +949,8 @@ paths:
           description: Internal server error
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Get all tags
       tags:
       - tag
@@ -922,6 +980,8 @@ paths:
           description: Internal server error
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Create a new tag
       tags:
       - tag
@@ -955,6 +1015,8 @@ paths:
           description: Internal server error
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Delete a tag by its ID
       tags:
       - tag
@@ -987,6 +1049,8 @@ paths:
           description: Internal server error
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Get a tag by its ID
       tags:
       - tag
@@ -1025,7 +1089,53 @@ paths:
           description: Internal server error
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Update a tag by its ID
       tags:
       - tag
+  /tags/popular:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list of famous tags (most used) with optional pagination
+        and sorting.
+      parameters:
+      - description: Filter by tag name
+        in: query
+        name: name
+        type: string
+      - description: Sort by count in descending order
+        in: query
+        name: desc
+        type: boolean
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Number of tags per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tag.GetFamousTagsRes'
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get famous tags
+      tags:
+      - tag
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

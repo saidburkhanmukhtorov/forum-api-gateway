@@ -17,6 +17,11 @@ const docTemplate = `{
     "paths": {
         "/categories": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Retrieve a list of all categories with optional pagination",
                 "consumes": [
                     "application/json"
@@ -57,101 +62,12 @@ const docTemplate = `{
                     }
                 }
             },
-            "post": {
-                "description": "Create a new category with given information",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "category"
-                ],
-                "summary": "Create a new category",
-                "parameters": [
-                    {
-                        "description": "Category information",
-                        "name": "category",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/category.CreateCategoryRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/category.Category"
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid request body",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/categories/{id}": {
-            "get": {
-                "description": "Retrieve a category by its unique ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "category"
-                ],
-                "summary": "Get a category by its ID",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Category ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/category.Category"
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid request body",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "404": {
-                        "description": "Category item not found",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            },
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Update a category with the given information",
                 "consumes": [
                     "application/json"
@@ -208,7 +124,116 @@ const docTemplate = `{
                     }
                 }
             },
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Create a new category with given information",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "category"
+                ],
+                "summary": "Create a new category",
+                "parameters": [
+                    {
+                        "description": "Category information",
+                        "name": "category",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/category.CreateCategoryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/category.Category"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/categories/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Retrieve a category by its unique ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "category"
+                ],
+                "summary": "Get a category by its ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Category ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/category.Category"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Category item not found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Delete a category by its unique ID",
                 "consumes": [
                     "application/json"
@@ -253,6 +278,11 @@ const docTemplate = `{
         },
         "/comments": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Retrieve a list of all comments with optional filtering and pagination",
                 "consumes": [
                     "application/json"
@@ -306,6 +336,11 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Create a new comment with given information",
                 "consumes": [
                     "application/json"
@@ -352,6 +387,11 @@ const docTemplate = `{
         },
         "/comments/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Retrieve a comment by its unique ID",
                 "consumes": [
                     "application/json"
@@ -400,6 +440,11 @@ const docTemplate = `{
                 }
             },
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Update a comment with the given information",
                 "consumes": [
                     "application/json"
@@ -457,6 +502,11 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Delete a comment by its unique ID",
                 "consumes": [
                     "application/json"
@@ -507,6 +557,11 @@ const docTemplate = `{
         },
         "/posts": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Retrieve a list of all posts with optional filtering and pagination",
                 "consumes": [
                     "application/json"
@@ -572,6 +627,11 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Create a new post with given information",
                 "consumes": [
                     "application/json"
@@ -618,6 +678,11 @@ const docTemplate = `{
         },
         "/posts/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Retrieve a post by its unique ID",
                 "consumes": [
                     "application/json"
@@ -666,6 +731,11 @@ const docTemplate = `{
                 }
             },
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Update a post with the given information",
                 "consumes": [
                     "application/json"
@@ -723,6 +793,11 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Delete a post by its unique ID",
                 "consumes": [
                     "application/json"
@@ -773,6 +848,11 @@ const docTemplate = `{
         },
         "/posttags": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Retrieve a list of all post-tag relationships with optional filtering and pagination",
                 "consumes": [
                     "application/json"
@@ -826,6 +906,11 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Create a new post-tag relationship with given information",
                 "consumes": [
                     "application/json"
@@ -870,6 +955,11 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Delete a post-tag relationship with given information",
                 "consumes": [
                     "application/json"
@@ -922,6 +1012,11 @@ const docTemplate = `{
         },
         "/posttags/{tag_id}/posts": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Retrieve a list of posts associated with a given tag ID",
                 "consumes": [
                     "application/json"
@@ -978,6 +1073,11 @@ const docTemplate = `{
         },
         "/tags": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Retrieve a list of all tags with optional pagination",
                 "consumes": [
                     "application/json"
@@ -990,6 +1090,12 @@ const docTemplate = `{
                 ],
                 "summary": "Get all tags",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Find by tags name",
+                        "name": "name",
+                        "in": "query"
+                    },
                     {
                         "type": "integer",
                         "description": "Page number",
@@ -1019,6 +1125,11 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Create a new tag with given information",
                 "consumes": [
                     "application/json"
@@ -1063,8 +1174,73 @@ const docTemplate = `{
                 }
             }
         },
+        "/tags/popular": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Retrieve a list of famous tags (most used) with optional pagination and sorting.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tag"
+                ],
+                "summary": "Get famous tags",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Filter by tag name",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Sort by count in descending order",
+                        "name": "desc",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Number of tags per page",
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/tag.GetFamousTagsRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/tags/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Retrieve a tag by its unique ID",
                 "consumes": [
                     "application/json"
@@ -1113,6 +1289,11 @@ const docTemplate = `{
                 }
             },
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Update a tag with the given information",
                 "consumes": [
                     "application/json"
@@ -1170,6 +1351,11 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Delete a tag by its unique ID",
                 "consumes": [
                     "application/json"
@@ -1522,6 +1708,17 @@ const docTemplate = `{
                 }
             }
         },
+        "tag.FamousTag": {
+            "type": "object",
+            "properties": {
+                "count": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
         "tag.GetAllTagsResponse": {
             "type": "object",
             "properties": {
@@ -1529,6 +1726,17 @@ const docTemplate = `{
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/tag.Tag"
+                    }
+                }
+            }
+        },
+        "tag.GetFamousTagsRes": {
+            "type": "object",
+            "properties": {
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/tag.FamousTag"
                     }
                 }
             }
@@ -1565,6 +1773,13 @@ const docTemplate = `{
                 }
             }
         }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
     }
 }`
 
@@ -1578,6 +1793,7 @@ var SwaggerInfo = &swag.Spec{
 	Description:      "This is a forum API gateway service.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
+	
 }
 
 func init() {

@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/Forum-service/Forum-api-gateway/genproto/tag"
 	"github.com/gin-gonic/gin"
@@ -14,6 +15,7 @@ import (
 // @Tags tag
 // @Accept json
 // @Produce json
+// @Security BearerAuth
 // @Param tag body tag.CreateTagRequest true "Tag information"
 // @Success 201 {object} tag.Tag
 // @Failure 400 {object} string "Invalid request body"
@@ -45,6 +47,7 @@ func (h *Handler) CreateTag(c *gin.Context) {
 // @Tags tag
 // @Accept json
 // @Produce json
+// @Security BearerAuth
 // @Param id path string true "Tag ID"
 // @Success 200 {object} tag.Tag
 // @Failure 400 {object} string "Invalid request body"
@@ -73,6 +76,7 @@ func (h *Handler) GetTagById(c *gin.Context) {
 // @Tags tag
 // @Accept json
 // @Produce json
+// @Security BearerAuth
 // @Param id path string true "Tag ID"
 // @Param tag body tag.UpdateTagRequest true "Tag information"
 // @Success 200 {object} tag.Tag
@@ -108,6 +112,7 @@ func (h *Handler) UpdateTag(c *gin.Context) {
 // @Tags tag
 // @Accept json
 // @Produce json
+// @Security BearerAuth
 // @Param id path string true "Tag ID"
 // @Success 200 {object} tag.DeleteTagResponse
 // @Failure 400 {object} string "Invalid request body"
@@ -133,6 +138,8 @@ func (h *Handler) DeleteTag(c *gin.Context) {
 // @Tags tag
 // @Accept json
 // @Produce json
+// @Security BearerAuth
+// @Param name query string false "Find by tags name"
 // @Param page query int false "Page number"
 // @Param limit query int false "Number of tags per page"
 // @Success 200 {object} tag.GetAllTagsResponse
@@ -143,6 +150,8 @@ func (h *Handler) GetAllTags(c *gin.Context) {
 		req tag.GetAllTagsRequest
 		err error
 	)
+
+	req.Name = c.Query("name")
 	req.Page, req.Limit, err = ReadPageLimit(c)
 	if err != nil {
 		log.Error().Err(err).Msg("failed to read page limit")
@@ -159,5 +168,56 @@ func (h *Handler) GetAllTags(c *gin.Context) {
 		})
 		return
 	}
+	c.JSON(http.StatusOK, resp)
+}
+
+// GetFamousTags godoc
+// @Summary Get famous tags
+// @Description Retrieve a list of famous tags (most used) with optional pagination and sorting.
+// @Tags tag
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param name query string false "Filter by tag name"
+// @Param desc query bool false "Sort by count in descending order"
+// @Param page query int false "Page number"
+// @Param limit query int false "Number of tags per page"
+// @Success 200 {object} tag.GetFamousTagsRes
+// @Failure 500 {object} string "Internal server error"
+// @Router /tags/popular [get]
+func (h *Handler) GetFamousTags(c *gin.Context) {
+	var (
+		req tag.GetFamousTagsReq
+		err error
+	)
+
+	req.Name = c.Query("name")
+	req.Desc, err = strconv.ParseBool(c.Query("desc"))
+	if err != nil {
+		log.Error().Err(err).Msg("failed to parse desc parameter")
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Invalid desc parameter",
+		})
+		return
+	}
+
+	req.Page, req.Limit, err = ReadPageLimit(c)
+	if err != nil {
+		log.Error().Err(err).Msg("failed to read page limit")
+		c.JSON(http.StatusBadGateway, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	resp, err := h.TagService.GetFamousTags(c.Request.Context(), &req)
+	if err != nil {
+		log.Error().Err(err).Msg("failed to get famous tags")
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
 	c.JSON(http.StatusOK, resp)
 }

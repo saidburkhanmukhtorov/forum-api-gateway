@@ -15,6 +15,7 @@ import (
 // @Tags category
 // @Accept json
 // @Produce json
+// @Security BearerAuth
 // @Param category body category.CreateCategoryRequest true "Category information"
 // @Success 201 {object} category.Category
 // @Failure 400 {object} string "Invalid request body"
@@ -46,6 +47,7 @@ func (h *Handler) CreateCategory(c *gin.Context) {
 // @Tags category
 // @Accept json
 // @Produce json
+// @Security BearerAuth
 // @Param id path string true "Category ID"
 // @Success 200 {object} category.Category
 // @Failure 400 {object} string "Invalid request body"
@@ -74,6 +76,7 @@ func (h *Handler) GetCategoryById(c *gin.Context) {
 // @Tags category
 // @Accept json
 // @Produce json
+// @Security BearerAuth
 // @Param id path string true "Category ID"
 // @Param category body category.UpdateCategoryRequest true "Category information"
 // @Success 200 {object} category.Category
@@ -107,6 +110,7 @@ func (h *Handler) UpdateCategory(c *gin.Context) {
 // @Tags category
 // @Accept json
 // @Produce json
+// @Security BearerAuth
 // @Param id path string true "Category ID"
 // @Success 200 {object} category.DeleteCategoryResponse
 // @Failure 404 {object} string "Category item not found"
@@ -131,6 +135,7 @@ func (h *Handler) DeleteCategory(c *gin.Context) {
 // @Tags category
 // @Accept json
 // @Produce json
+// @Security BearerAuth
 // @Param page query int false "Page number"
 // @Param limit query int false "Number of categories per page"
 // @Success 200 {object} category.GetAllCategoriesResponse

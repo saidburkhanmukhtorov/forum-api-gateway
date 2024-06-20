@@ -15,6 +15,7 @@ import (
 // @Tags posttag
 // @Accept json
 // @Produce json
+// @Security BearerAuth
 // @Param posttag body posttag.CreatePostTagRequest true "PostTag information"
 // @Success 201 {object} posttag.PostTag
 // @Failure 400 {object} string "Invalid request body"
@@ -46,6 +47,7 @@ func (h *Handler) CreatePostTag(c *gin.Context) {
 // @Tags posttag
 // @Accept json
 // @Produce json
+// @Security BearerAuth
 // @Param posttag body posttag.DeletePostTagRequest true "PostTag information"
 // @Success 200 {object} posttag.DeletePostTagResponse
 // @Failure 400 {object} string "Invalid request body"
@@ -78,6 +80,7 @@ func (h *Handler) DeletePostTag(c *gin.Context) {
 // @Tags posttag
 // @Accept json
 // @Produce json
+// @Security BearerAuth
 // @Param page query int false "Page number"
 // @Param limit query int false "Number of post-tag relationships per page"
 // @Param post_id query string false "Filter by post ID"
@@ -118,6 +121,7 @@ func (h *Handler) GetAllPostTags(c *gin.Context) {
 // @Tags posttag
 // @Accept json
 // @Produce json
+// @Security BearerAuth
 // @Param tag_id path string true "Tag ID"
 // @Param page query int false "Page number"
 // @Param limit query int false "Number of posts per page"

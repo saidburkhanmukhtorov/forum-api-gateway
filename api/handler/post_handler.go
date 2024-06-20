@@ -14,6 +14,7 @@ import (
 // @Tags post
 // @Accept json
 // @Produce json
+// @Security BearerAuth
 // @Param post body post.CreatePostRequest true "Post information"
 // @Success 201 {object} post.Post
 // @Failure 400 {object} string "Invalid request body"
@@ -45,6 +46,7 @@ func (h *Handler) CreatePost(c *gin.Context) {
 // @Tags post
 // @Accept json
 // @Produce json
+// @Security BearerAuth
 // @Param id path string true "Post ID"
 // @Success 200 {object} post.Post
 // @Failure 400 {object} string "Invalid request body"
@@ -73,6 +75,7 @@ func (h *Handler) GetPostById(c *gin.Context) {
 // @Tags post
 // @Accept json
 // @Produce json
+// @Security BearerAuth
 // @Param id path string true "Post ID"
 // @Param post body post.UpdatePostRequest true "Post information"
 // @Success 200 {object} post.Post
@@ -108,6 +111,7 @@ func (h *Handler) UpdatePost(c *gin.Context) {
 // @Tags post
 // @Accept json
 // @Produce json
+// @Security BearerAuth
 // @Param id path string true "Post ID"
 // @Success 200 {object} post.DeletePostResponse
 // @Failure 400 {object} string "Invalid request body"
@@ -133,6 +137,7 @@ func (h *Handler) DeletePost(c *gin.Context) {
 // @Tags post
 // @Accept json
 // @Produce json
+// @Security BearerAuth
 // @Param page query int false "Page number"
 // @Param limit query int false "Number of posts per page"
 // @Param user_id query string false "Filter by user ID"
