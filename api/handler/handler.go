@@ -26,7 +26,7 @@ type Handler struct {
 // NewHandler establishes gRPC connections and returns a Handler struct.
 func NewHandler() (*Handler, error) {
 	conn, err := grpc.NewClient(
-		"localhost:8082",
+		"forum_service:8082",
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {

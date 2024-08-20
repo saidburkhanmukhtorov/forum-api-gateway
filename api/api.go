@@ -3,7 +3,6 @@ package api
 import (
 	_ "github.com/Forum-service/Forum-api-gateway/api/docs"
 	"github.com/Forum-service/Forum-api-gateway/api/handler"
-	"github.com/Forum-service/Forum-api-gateway/api/middlewares"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
@@ -26,7 +25,7 @@ func NewEngine() *gin.Engine {
 
 	r := gin.Default()
 	r.GET("/api/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	r.Use(middlewares.Auth)
+	// r.Use(middlewares.Auth)
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"*"}, // Adjust for your specific origins
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
